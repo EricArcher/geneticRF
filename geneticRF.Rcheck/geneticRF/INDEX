@@ -1,0 +1,12 @@
+classify.by.hap.freq    Classify By Haplotype Frequency
+collapse.to.haps        Collapse To Haplotypes
+create.seq.df           Create Sequence Data.Frame
+gtype.rf                gtype Random Forest
+make.haps               Make Haplotypes
+min.votes               Minimum Votes
+pct.diag                Extract Percent Diagnosable
+rf.conf.int             Confidence Intervals
+rf.species.id           Random Forest Species ID
+seq.df.rf               Sequence Random Forest
+shared.haps.pd          Diagnosability Based on Shared Haplotypes
+unique.hap.by.site      Make Haplotypes

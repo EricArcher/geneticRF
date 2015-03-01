@@ -1,0 +1,12 @@
+classify.by.hap.freq	classify.by.hap.freq
+collapse.to.haps	collapse.to.haps
+create.seq.df	create.seq.df
+gtype.rf	gtype.rf
+make.haps	make.haps
+min.votes	min.votes
+pct.diag	pct.diag
+rf.conf.int	rf.conf.int
+rf.species.id	rf.species.id
+seq.df.rf	seq.df.rf
+shared.haps.pd	shared.haps.pd
+unique.hap.by.site	unique.hap.by.site
