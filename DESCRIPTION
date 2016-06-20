@@ -1,0 +1,13 @@
+Package: geneticRF
+Type: Package
+Title: Genetic Random Forest
+Description: Conduct Random Forest analysis for sequences.
+Version: 0.9
+Authors@R: c(
+  EA = person("Eric", "Archer", email = "eric.archer@noaa.gov", role = c("aut", "cre")))
+Imports:
+    rfPermute,
+    strataG,
+    swfscMisc
+License: GNU General Public License
+RoxygenNote: 5.0.1
