@@ -5,7 +5,7 @@
 \title{Sequence Random Forest}
 \usage{
 sequenceRF(seq.df, replace = FALSE, sampsize = NULL, train.pct = 0.5,
-  min.n = 2, ...)
+  min.n = 2, nrep = 0, ...)
 }
 \arguments{
 \item{seq.df}{data.frame of stratified and aligned sequences from \code{\link{gtypes2seqDF}}.}
@@ -19,6 +19,9 @@ If \code{NULL}, value is set to the minumum sample size * \code{train.pct}.}
 
 \item{min.n}{minimum sample size to use. If sample size for any strata is less this, 
 this value will be used instead.}
+
+\item{nrep}{number of replicates for \code{\link[rfPermute]{rfPermute}} permutation 
+test. Leave at \code{0} to skip test.}
 
 \item{...}{arguments passed to \code{\link[randomForest]{randomForest}}.}
 }
