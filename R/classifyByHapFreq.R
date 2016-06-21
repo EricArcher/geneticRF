@@ -2,10 +2,6 @@
 #' @description Classify samples by haplotype frequency.
 #' 
 #' @param seq.df data.frame of stratified and aligned sequences from \code{\link{gtypes2seqDF}}.
-#' @param ... arguments passed to \code{\link[randomForest]{randomForest}}.
-#' 
-#' @return a list containing a data.frame of summary statistics (\code{smry}), and the 
-#'   \code{randomForest} object (\code{rf}).
 #' 
 #' @author Eric Archer \email{eric.archer@@noaa.gov} 
 #' 

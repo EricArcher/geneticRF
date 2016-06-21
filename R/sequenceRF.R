@@ -34,7 +34,7 @@ sequenceRF <- function(seq.df, replace = FALSE, sampsize = NULL, train.pct = 0.5
   
   overall.accuracy <- 1 - as.vector(rf$err.rate[nrow(rf$err.rate), "OOB"])
   conf.ci <- confIntRF(rf)
-  min.diag <- which.min(conf.ci[, 1])
+  min.diag <- which.min(conf.ci[-nrow(conf.ci), 1])
   diag.strata <- rownames(conf.ci)[min.diag]
   prior.diag <- as.vector(prop.table(table(rf$y))[diag.strata])
   hap.class.tbl <- classifyByHapFreq(seq.df)$class.tbl

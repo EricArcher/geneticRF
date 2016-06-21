@@ -8,12 +8,6 @@ classifyByHapFreq(seq.df)
 }
 \arguments{
 \item{seq.df}{data.frame of stratified and aligned sequences from \code{\link{gtypes2seqDF}}.}
-
-\item{...}{arguments passed to \code{\link[randomForest]{randomForest}}.}
-}
-\value{
-a list containing a data.frame of summary statistics (\code{smry}), and the 
-  \code{randomForest} object (\code{rf}).
 }
 \description{
 Classify samples by haplotype frequency.
