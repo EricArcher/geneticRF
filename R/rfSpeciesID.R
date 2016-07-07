@@ -24,7 +24,7 @@ rfSpeciesID <- function(g, ref.strata = NULL, unk.strata = NULL, ...) {
   if(length(intersect(ref.strata, unk.strata)) > 0) stop("'ref.strata' and 'unk.strata' cannot overlap.")
   if(length(unique(ref.strata)) < 2) stop("'ref.strata' must have 2 or more strata.")
   sub.g <- g[, , c(ref.strata, unk.strata), drop = TRUE]
-  seq.df <- gtypes2seqDF(sub.g)
+  seq.df <- gtypes2rfDF(sub.g)
   ref.df <- subset(seq.df, strata %in% ref.strata)
   ref.df$strata <- droplevels(ref.df$strata)
   ref.rf <- sequenceRF(ref.df, ...)

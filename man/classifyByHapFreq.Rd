@@ -7,7 +7,7 @@
 classifyByHapFreq(seq.df)
 }
 \arguments{
-\item{seq.df}{data.frame of stratified and aligned sequences from \code{\link{gtypes2seqDF}}.}
+\item{seq.df}{data.frame of stratified and aligned sequences from \code{\link{gtypes2rfDF}}.}
 }
 \description{
 Classify samples by haplotype frequency.

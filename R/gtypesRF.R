@@ -33,14 +33,12 @@ gtypesRF <- function(g, gene = 1, pairwise = FALSE, ...) {
     result <- lapply(1:nrow(sp), function(i) {
       pair.g <- g[, , unlist(sp[i, ])]
       do.call(gtypesRF, c(list(g = pair.g, pairwise = FALSE), args))
-      #gtypesRF(pair.g, pairwise = FALSE, ...)
     })
     list(smry = cbind(sp, do.call(rbind, lapply(result, function(x) x$smry))),
          rf = lapply(result, function(x) x$rf)
     )
   } else {
-    args <- c(list(seq.df = gtypes2seqDF(g, gene = gene)), args)
+    args <- c(list(seq.df = gtypes2rfDF(g, gene = gene)), args)
     do.call(sequenceRF, args)
-    #sequenceRF(seq.df, ...)
   }
 }

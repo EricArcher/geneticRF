@@ -6,8 +6,8 @@ Version: 0.9
 Authors@R: c(
   EA = person("Eric", "Archer", email = "eric.archer@noaa.gov", role = c("aut", "cre")))
 Imports:
-    rfPermute,
+    randomForest,
     strataG,
     swfscMisc
 License: GNU General Public License
-RoxygenNote: 5.0.1
+RoxygenNote: 5.0.1.9000

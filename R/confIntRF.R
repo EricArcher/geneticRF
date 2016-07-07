@@ -6,6 +6,7 @@
 #' 
 #' @author Eric Archer \email{eric.archer@@noaa.gov} 
 #' 
+#' @importFrom stats binom.test
 #' @export
 #' 
 confIntRF <- function(rf, conf.level = 0.95) {
