@@ -4,7 +4,8 @@
 \alias{gtypesRF}
 \title{gtype Random Forest}
 \usage{
-gtypesRF(g, gene = 1, pairwise = FALSE, ...)
+gtypesRF(g, gene = 1, pairwise = FALSE, conf.level = 0.95,
+  threshold = 0.8, ...)
 }
 \arguments{
 \item{g}{haploid \code{\link[strataG]{gtypes}} object with aligned sequences.}
@@ -12,6 +13,10 @@ gtypesRF(g, gene = 1, pairwise = FALSE, ...)
 \item{gene}{number or name of gene to use from multidna \code{@sequences} slot.}
 
 \item{pairwise}{do analysis on all pairwise combinations of strata?}
+
+\item{conf.level}{confidence level for the \code{\link{binom.test}} confidence interval}
+
+\item{threshold}{threshold to test observed classification probability against.}
 
 \item{...}{arguments passed to \code{\link{sequenceRF}} and \code{\link[randomForest]{randomForest}}.}
 }

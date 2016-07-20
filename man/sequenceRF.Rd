@@ -5,7 +5,7 @@
 \title{Sequence Random Forest}
 \usage{
 sequenceRF(seq.df, replace = FALSE, sampsize = NULL, train.pct = 0.5,
-  min.n = 2, ...)
+  min.n = 2, nrep = 0, conf.level = 0.95, threshold = 0.8, ...)
 }
 \arguments{
 \item{seq.df}{data.frame of stratified and aligned sequences from \code{\link{gtypes2rfDF}}.}
@@ -20,6 +20,12 @@ If \code{NULL}, value is set to the minumum sample size * \code{train.pct}.}
 \item{min.n}{minimum sample size to use. If sample size for any strata is less this, 
 this value will be used instead.}
 
+\item{nrep}{number of rfPermute replicates.}
+
+\item{conf.level}{confidence level for the \code{\link{binom.test}} confidence interval}
+
+\item{threshold}{threshold to test observed classification probability against.}
+
 \item{...}{arguments passed to \code{\link[randomForest]{randomForest}}.}
 }
 \value{
@@ -31,5 +37,8 @@ Conduct Random Forest on stratified data.frame of sequences.
 }
 \author{
 Eric Archer \email{eric.archer@noaa.gov}
+}
+\seealso{
+\code{\link[rfPermute]{classConfInt}}
 }
 

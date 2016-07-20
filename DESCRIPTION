@@ -6,6 +6,7 @@ Version: 0.9
 Authors@R: c(
   EA = person("Eric", "Archer", email = "eric.archer@noaa.gov", role = c("aut", "cre")))
 Imports:
+    rfPermute,
     randomForest,
     strataG,
     swfscMisc
