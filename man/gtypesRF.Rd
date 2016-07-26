@@ -5,7 +5,7 @@
 \title{gtype Random Forest}
 \usage{
 gtypesRF(g, gene = 1, pairwise = FALSE, conf.level = 0.95,
-  threshold = 0.8, ...)
+  threshold = 0.8, unk = NULL, ...)
 }
 \arguments{
 \item{g}{haploid \code{\link[strataG]{gtypes}} object with aligned sequences.}
@@ -17,6 +17,8 @@ gtypesRF(g, gene = 1, pairwise = FALSE, conf.level = 0.95,
 \item{conf.level}{confidence level for the \code{\link{binom.test}} confidence interval}
 
 \item{threshold}{threshold to test observed classification probability against.}
+
+\item{unk}{vector of strata to be treated as "unknowns" for prediction with}
 
 \item{...}{arguments passed to \code{\link{sequenceRF}} and \code{\link[randomForest]{randomForest}}.}
 }

@@ -22,7 +22,8 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
     # extract stratified sequences
     df <- na.omit(as.data.frame(g))
     colnames(df)[3] <- "haplotype"
-    dna.seqs <- sequences(g[df$id, , , drop = TRUE], gene)
+    dna.seqs <- as.matrix(getSequences(sequences(g), loci = gene))[df$haplotype, ]
+    #dna.seqs <- sequences(g[df$id, , , drop = TRUE], gene)
     
     # extract variable sites for these sequences and create sequence matrix
     var.sites <- variableSites(dna.seqs)
