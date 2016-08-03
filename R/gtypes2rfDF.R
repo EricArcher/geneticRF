@@ -58,8 +58,14 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
   # remove columns where substitutions are only represented by one individual
   preds <- rf.df[, -1, drop = FALSE]
   to.keep <- apply(preds, 2, function(x) sum(table(x) > 1) > 1)
-  if(sum(to.keep) == 0) return(NULL)
+  if(sum(to.keep) == 0) {
+    warning("all predictors are either constant or variable in only one individual. NULL returned")
+    return(NULL)
+  }
+  preds <- preds[, to.keep, drop = FALSE]
+  # convert to factor
+  preds <- do.call(data.frame, lapply(preds, factor))
   
   st <- if(is.null(label)) rf.df$strata else paste(label, rf.df$strata)
-  cbind(strata = factor(st), preds[, to.keep, drop = FALSE])
+  cbind(strata = factor(st), preds)
 }
