@@ -26,7 +26,7 @@ gtypesRF <- function(g, gene = 1, pairwise = FALSE, conf.level = 0.95,
   if(length(ss.match) == 1) {
     temp.ss <- args[[ss.match]]
     if(is.null(names(temp.ss))) {
-      names(temp.ss) <- levels(strata(g))
+      names(temp.ss) <- levels(strataG::strata(g))
       args[[ss.match]] <- temp.ss
       names(args)[ss.match] <- "sampsize"
     }

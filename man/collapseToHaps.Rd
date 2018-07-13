@@ -15,4 +15,3 @@ Collapse sequence data.frame to unique haplotypes.
 \author{
 Eric Archer \email{eric.archer@noaa.gov}
 }
-

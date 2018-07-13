@@ -15,4 +15,3 @@ Classify samples by haplotype frequency.
 \author{
 Eric Archer \email{eric.archer@noaa.gov}
 }
-

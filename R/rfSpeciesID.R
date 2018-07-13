@@ -18,18 +18,18 @@
 #' @export
 #' 
 rfSpeciesID <- function(g, ref.strata = NULL, unk.strata = NULL, ...) {
-  g.strata <- sort(unique(strata(g)))
+  g.strata <- sort(unique(strataG::strata(g)))
   if(is.null(ref.strata)) ref.strata <- setdiff(g.strata, unk.strata)
   if(is.null(unk.strata)) unk.strata <- setdiff(g.strata, ref.strata)
   if(length(intersect(ref.strata, unk.strata)) > 0) stop("'ref.strata' and 'unk.strata' cannot overlap.")
   if(length(unique(ref.strata)) < 2) stop("'ref.strata' must have 2 or more strata.")
   sub.g <- g[, , c(ref.strata, unk.strata), drop = TRUE]
   seq.df <- gtypes2rfDF(sub.g)
-  ref.df <- subset(seq.df, strata %in% ref.strata)
+  ref.df <- seq.df[seq.df$strata %in% ref.strata, ]
   ref.df$strata <- droplevels(ref.df$strata)
   ref.rf <- sequenceRF(ref.df, ...)
   if(length(unk.strata) == 0) return(list(pred = NA, prob = NA, rf = ref.rf))
-  unk.df <- subset(seq.df, strata %in% unk.strata)
+  unk.df <- seq.df[seq.df$strata %in% unk.strata, ]
   unk.df$strata <- droplevels(unk.df$strata)
   unk.pred <- predict(ref.rf$rf, unk.df, type = "response")
   unk.prob <- predict(ref.rf$rf, unk.df, type = "prob")

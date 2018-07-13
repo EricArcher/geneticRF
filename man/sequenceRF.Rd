@@ -4,11 +4,11 @@
 \alias{sequenceRF}
 \title{Sequence Random Forest}
 \usage{
-sequenceRF(seq.df, replace = FALSE, sampsize = NULL, train.pct = 0.5,
+sequenceRF(x, replace = FALSE, sampsize = NULL, train.pct = 0.5,
   min.n = 2, nrep = 0, conf.level = 0.95, threshold = 0.8, ...)
 }
 \arguments{
-\item{seq.df}{data.frame of stratified and aligned sequences from \code{\link{gtypes2rfDF}}.}
+\item{x}{data.frame of stratified and aligned sequences from \code{\link{gtypes2rfDF}}.}
 
 \item{replace}{sample with replacement? passed to \code{\link[randomForest]{randomForest}}.}
 
@@ -35,10 +35,9 @@ a list containing a data.frame of summary statistics (\code{smry}), and the
 \description{
 Conduct Random Forest on stratified data.frame of sequences.
 }
-\author{
-Eric Archer \email{eric.archer@noaa.gov}
-}
 \seealso{
 \code{\link[rfPermute]{classConfInt}}
 }
-
+\author{
+Eric Archer \email{eric.archer@noaa.gov}
+}

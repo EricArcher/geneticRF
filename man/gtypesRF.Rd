@@ -34,4 +34,3 @@ Conduct Random Forest on a gtypes object.
 \author{
 Eric Archer \email{eric.archer@noaa.gov}
 }
-

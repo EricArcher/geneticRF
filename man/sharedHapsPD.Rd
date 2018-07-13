@@ -15,4 +15,3 @@ Maximum diagnosability based on shared haplotypes.
 \author{
 Eric Archer \email{eric.archer@noaa.gov}
 }
-

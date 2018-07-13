@@ -24,4 +24,3 @@ Create data.frame of variable sites from gtypes object.
 \author{
 Eric Archer \email{eric.archer@noaa.gov}
 }
-

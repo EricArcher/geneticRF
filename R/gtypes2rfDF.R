@@ -11,22 +11,20 @@
 #' 
 #' @author Eric Archer \email{eric.archer@@noaa.gov} 
 #' 
-#' @import strataG
-#' @importFrom stats na.omit
 #' @export
 
 gtypes2rfDF <- function(g, gene = 1, label = NULL) {
-  rf.df <- if(ploidy(g) == 1) {
-    if(is.null(sequences(g))) stop("'g' must have aligned sequences")
+  rf.df <- if(strataG::ploidy(g) == 1) {
+    if(is.null(strataG::sequences(g))) stop("'g' must have aligned sequences")
     
     # extract stratified sequences
-    df <- na.omit(as.data.frame(g))
+    df <- stats::na.omit(strataG::as.data.frame(g))
     colnames(df)[3] <- "haplotype"
-    dna.seqs <- as.matrix(getSequences(sequences(g), loci = gene))[df$haplotype, ]
+    dna.seqs <- as.matrix(apex::getSequences(strataG::sequences(g), loci = gene))[df$haplotype, ]
     #dna.seqs <- sequences(g[df$id, , , drop = TRUE], gene)
     
     # extract variable sites for these sequences and create sequence matrix
-    var.sites <- variableSites(dna.seqs)
+    var.sites <- strataG::variableSites(dna.seqs)
     var.seq.mat <- tolower(do.call(rbind, as.character(as.list(var.sites$sites))))
     sites <- paste("site", colnames(var.sites$site.freqs), sep = ".")
     
@@ -53,7 +51,7 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
   }
   
   # add strata and remove any rows with missing data
-  rf.df <- na.omit(rf.df)
+  rf.df <- stats::na.omit(rf.df)
   
   # remove columns where substitutions are only represented by one individual
   preds <- rf.df[, -1, drop = FALSE]
@@ -67,5 +65,7 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
   preds <- do.call(data.frame, lapply(preds, factor))
   
   st <- if(is.null(label)) rf.df$strata else paste(label, rf.df$strata)
-  cbind(strata = factor(st), preds)
+  result <- cbind(strata = factor(st), preds)
+  rownames(result) <- rownames(rf.df)
+  result
 }

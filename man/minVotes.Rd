@@ -17,4 +17,3 @@ Calculate Random Forest confidence intervals
 \author{
 Eric Archer \email{eric.archer@noaa.gov}
 }
-

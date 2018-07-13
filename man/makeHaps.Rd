@@ -15,4 +15,3 @@ Identify haplotypes in data.frame of aligned.
 \author{
 Eric Archer \email{eric.archer@noaa.gov}
 }
-
