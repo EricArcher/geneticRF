@@ -14,14 +14,13 @@
 #' @export
 
 gtypes2rfDF <- function(g, gene = 1, label = NULL) {
-  rf.df <- if(strataG::ploidy(g) == 1) {
-    if(is.null(strataG::sequences(g))) stop("'g' must have aligned sequences")
+  rf.df <- if(strataG::getPloidy(g) == 1) {
+    if(is.null(strataG::getSequences(g))) stop("'g' must have aligned sequences")
     
     # extract stratified sequences
-    df <- stats::na.omit(strataG::as.data.frame(g))
-    colnames(df)[3] <- "haplotype"
-    dna.seqs <- as.matrix(apex::getSequences(strataG::sequences(g), loci = gene))[df$haplotype, ]
-    #dna.seqs <- sequences(g[df$id, , , drop = TRUE], gene)
+    if(is.numeric(gene)) gene <- strataG::getLociNames(g)[gene]
+    df <- stats::na.omit(strataG::as.data.frame(g))[, c("id", "stratum", gene)]
+    dna.seqs <- as.matrix(strataG::getSequences(g)[[gene]])[df[, 3], ]
     
     # extract variable sites for these sequences and create sequence matrix
     var.sites <- strataG::variableSites(dna.seqs)
@@ -39,7 +38,7 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
     colnames(seq.df) <- colnames(var.seq.mat)
     
     # add strata and Ids
-    seq.df <- data.frame(cbind(strata = df$strata, seq.df[df$haplotype, ]))
+    seq.df <- data.frame(cbind(stratum = df$stratum, seq.df[df[, 3], ]))
     rownames(seq.df) <- rownames(df)
     
     seq.df
@@ -64,8 +63,8 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
   # convert to factor
   preds <- do.call(data.frame, lapply(preds, factor))
   
-  st <- if(is.null(label)) rf.df$strata else paste(label, rf.df$strata)
-  result <- cbind(strata = factor(st), preds)
+  st <- if(is.null(label)) rf.df$stratum else paste(label, rf.df$stratum)
+  result <- cbind(stratum = factor(st), preds)
   rownames(result) <- rownames(rf.df)
   result
 }

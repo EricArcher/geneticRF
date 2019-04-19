@@ -21,7 +21,6 @@
 #' @seealso \code{\link[rfPermute]{classConfInt}}
 #' 
 #' @import rfPermute
-#' @importFrom swfscMisc diversity
 #' @importFrom stats predict
 #' 
 #' @export
@@ -30,14 +29,14 @@ sequenceRF <- function(x, replace = FALSE, sampsize = NULL,
                        train.pct = 0.5, min.n = 2, nrep = 0, 
                        conf.level = 0.95, threshold = 0.8, ...) {
   if(is.null(x)) return(NULL)
-  if(length(unique(x$strata)) < 2) return(NULL)
+  if(length(unique(x$stratum)) < 2) return(NULL)
   if(is.null(sampsize)) {
-    strata.freq <- table(x$strata)
+    strata.freq <- table(x$stratum)
     n <- ceiling(min(strata.freq) * train.pct)
     sampsize <- rep(n, length(strata.freq))
   }
   sampsize <- ifelse(sampsize < min.n, min.n, sampsize)
-  rf <- rfPermute(strata ~ ., data = x, replace = replace, 
+  rf <- rfPermute(stratum ~ ., data = x, replace = replace, 
                   sampsize = sampsize, nrep = nrep,...)
   
   overall.accuracy <- 1 - as.vector(rf$err.rate[nrow(rf$err.rate), "OOB"])
@@ -55,7 +54,7 @@ sequenceRF <- function(x, replace = FALSE, sampsize = NULL,
   num.unique.hap.rf.vs <- length(table(unique.hap.vs.vec))
   
   smry <- data.frame(
-    overall.accuracy = overall.accuracy,
+    overall.accuracy = overall.accuracy * 100,
     diag.strata = diag.strata,
     diagnosability = ci[min.diag, 1],
     diag.lci = ci[min.diag, 2],

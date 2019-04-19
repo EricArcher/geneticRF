@@ -26,7 +26,7 @@ gtypesRF <- function(g, gene = 1, pairwise = FALSE, conf.level = 0.95,
   if(length(ss.match) == 1) {
     temp.ss <- args[[ss.match]]
     if(is.null(names(temp.ss))) {
-      names(temp.ss) <- levels(strataG::strata(g))
+      names(temp.ss) <- strataG::getStrataNames(g)
       args[[ss.match]] <- temp.ss
       names(args)[ss.match] <- "sampsize"
     }
@@ -44,7 +44,7 @@ gtypesRF <- function(g, gene = 1, pairwise = FALSE, conf.level = 0.95,
   } else {
     seq.df <- gtypes2rfDF(g, gene = gene)
     rf.df <- if(!is.null(unk)) {
-      droplevels(seq.df[!seq.df$strata %in% unk, ])
+      droplevels(seq.df[!seq.df$stratum %in% unk, ])
     } else seq.df
     args <- c(list(x = rf.df), args)
     result <- do.call(sequenceRF, args)
