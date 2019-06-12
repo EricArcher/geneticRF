@@ -20,7 +20,7 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
     # extract stratified sequences
     if(is.numeric(gene)) gene <- strataG::getLociNames(g)[gene]
     df <- stats::na.omit(strataG::as.data.frame(g))[, c("id", "stratum", gene)]
-    dna.seqs <- as.matrix(strataG::getSequences(g)[[gene]])[df[, 3], ]
+    dna.seqs <- as.matrix(strataG::getSequences(g)[[gene]])[df[, gene], ]
     
     # extract variable sites for these sequences and create sequence matrix
     var.sites <- strataG::variableSites(dna.seqs)
@@ -39,11 +39,11 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
     
     # add strata and Ids
     seq.df <- data.frame(cbind(stratum = df$stratum, seq.df[df[, 3], ]))
-    rownames(seq.df) <- rownames(df)
+    rownames(seq.df) <- df$id
     
     seq.df
   } else {
-    snp.df <- as.data.frame(g, one.col = TRUE, ids = FALSE)
+    snp.df <- as.data.frame(g, one.col = TRUE, ids = TRUE)
     all.biallelic <- all(sapply(snp.df[, -1], function(x) nlevels(x) <= 3))
     if(!all.biallelic) warning("some loci in 'g' are not biallelic")
     snp.df
