@@ -2,7 +2,6 @@
 
 export(classifyByHapFreq)
 export(collapseToHaps)
-export(confIntRF)
 export(gtypes2rfDF)
 export(gtypesRF)
 export(makeHaps)
@@ -12,4 +11,3 @@ export(rfSpeciesID)
 export(sequenceRF)
 export(sharedHapsPD)
 export(uniqueHapBySite)
-importFrom(stats,binom.test)
