@@ -4,8 +4,16 @@
 \alias{sequenceRF}
 \title{Sequence Random Forest}
 \usage{
-sequenceRF(x, replace = FALSE, sampsize = NULL, train.pct = 0.5,
-  min.n = 2, nrep = 0, conf.level = 0.95, threshold = 0.8, ...)
+sequenceRF(
+  x,
+  replace = FALSE,
+  sampsize = NULL,
+  train.pct = 0.5,
+  min.n = 2,
+  nrep = 0,
+  conf.level = 0.95,
+  ...
+)
 }
 \arguments{
 \item{x}{data.frame of stratified and aligned sequences from \code{\link{gtypes2rfDF}}.}
@@ -23,8 +31,6 @@ this value will be used instead.}
 \item{nrep}{number of rfPermute replicates.}
 
 \item{conf.level}{confidence level for the \code{\link{binom.test}} confidence interval}
-
-\item{threshold}{threshold to test observed classification probability against.}
 
 \item{...}{arguments passed to \code{\link[randomForest]{randomForest}}.}
 }

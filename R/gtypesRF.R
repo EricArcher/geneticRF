@@ -5,7 +5,6 @@
 #' @param gene number or name of gene to use from multidna \code{@sequences} slot.
 #' @param pairwise do analysis on all pairwise combinations of strata?
 #' @param conf.level confidence level for the \code{\link{binom.test}} confidence interval
-#' @param threshold threshold to test observed classification probability against.
 #' @param unk vector of strata to be treated as "unknowns" for prediction with 
 #' @param ... arguments passed to \code{\link{sequenceRF}} and \code{\link[randomForest]{randomForest}}.
 #' 
@@ -16,10 +15,18 @@
 #' 
 #' @author Eric Archer \email{eric.archer@@noaa.gov}
 #' 
+#' @examples 
+#' library(strataG)
+#' data(dloop.g)
+#' 
+#' rf.result <- gtypesRF(dloop.g, pairwise = TRUE)
+#' 
+#' rf.result
+#' 
 #' @export
 
 gtypesRF <- function(g, gene = 1, pairwise = FALSE, conf.level = 0.95, 
-                     threshold = 0.8, unk = NULL, ...) {
+                     unk = NULL, ...) {
   # check for and set names to sampsize
   args <- list(...)
   ss.match <- which(pmatch(names(args), "sampsize") == 1)
@@ -51,8 +58,8 @@ gtypesRF <- function(g, gene = 1, pairwise = FALSE, conf.level = 0.95,
     result$seq.df <- seq.df
     result$unk <- if(!is.null(unk) & !is.null(result$rf)) {
       unk.df <- seq.df[seq.df$strata %in% unk, ]
-      pred <- data.frame(predict(result$rf, unk.df, type = "prob"))
-      pred$predicted <- predict(result$rf, unk.df, type = "response")
+      pred <- data.frame(stats::predict(result$rf, unk.df, type = "prob"))
+      pred$predicted <- stats::predict(result$rf, unk.df, type = "response")
       pred
     } else NULL
     result

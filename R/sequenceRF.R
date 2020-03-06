@@ -10,7 +10,6 @@
 #'   this value will be used instead.
 #' @param nrep number of rfPermute replicates.
 #' @param conf.level confidence level for the \code{\link{binom.test}} confidence interval
-#' @param threshold threshold to test observed classification probability against.
 #' @param ... arguments passed to \code{\link[randomForest]{randomForest}}.
 #' 
 #' @return a list containing a data.frame of summary statistics (\code{smry}), and the 
@@ -20,28 +19,28 @@
 #' 
 #' @seealso \code{\link[rfPermute]{classConfInt}}
 #' 
-#' @import rfPermute
-#' @importFrom stats predict
-#' 
 #' @export
 #' 
 sequenceRF <- function(x, replace = FALSE, sampsize = NULL, 
                        train.pct = 0.5, min.n = 2, nrep = 0, 
-                       conf.level = 0.95, threshold = 0.8, ...) {
+                       conf.level = 0.95, ...) {
   if(is.null(x)) return(NULL)
   if(length(unique(x$stratum)) < 2) return(NULL)
+  
   if(is.null(sampsize)) {
     strata.freq <- table(x$stratum)
     n <- ceiling(min(strata.freq) * train.pct)
     sampsize <- rep(n, length(strata.freq))
   }
   sampsize <- ifelse(sampsize < min.n, min.n, sampsize)
-  rf <- rfPermute(stratum ~ ., data = x, replace = replace, 
-                  sampsize = sampsize, nrep = nrep,...)
+  rf <- rfPermute::rfPermute(
+    stratum ~ ., data = x, replace = replace, 
+    sampsize = sampsize, nrep = nrep, ...
+  )
   
   overall.accuracy <- 1 - as.vector(rf$err.rate[nrow(rf$err.rate), "OOB"])
-  ci <- confusionMatrix(rf, conf.level = conf.level, threshold = threshold)
-  ci <- ci[, -(1:(nrow(ci) - 1))]
+  ci <- rfPermute::confusionMatrix(rf, conf.level = conf.level)
+  ci <- ci[, (length(rf$classes) + 1):(length(rf$classes) + 3)]
   min.diag <- which.min(ci[-nrow(ci), 1])
   diag.strata <- rownames(ci)[min.diag]
   hap.class.tbl <- classifyByHapFreq(x)$class.tbl
@@ -59,17 +58,11 @@ sequenceRF <- function(x, replace = FALSE, sampsize = NULL,
     diagnosability = ci[min.diag, 1],
     diag.lci = ci[min.diag, 2],
     diag.uci = ci[min.diag, 3],
-    pr.threshold = ci[min.diag, 4],
-    prior.diag = ci[min.diag, 5],
     shared.hap.diag = shared.hap.diag,
     pd95 = pctDiag(rf, 0.95)[2],
     num.vs = vs,
     num.haps = num.haps,
-    hap.div = swfscMisc::diversity(haps),
-    num.vs.unique.hap = num.rf.vs.unique.hap,
-    pct.vs.haps.shared = (vs - num.rf.vs.unique.hap) / vs,
-    num.unique.haps.vs = num.unique.hap.rf.vs,
-    pct.haps.vs.shared = (num.haps - num.unique.hap.rf.vs) / num.haps
+    hap.div = swfscMisc::diversity(haps)
   )
   rownames(smry) <- NULL
   

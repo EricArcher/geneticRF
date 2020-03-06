@@ -42,7 +42,7 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
     rownames(seq.df) <- df$id
     
     seq.df
-  } else {
+  } else { # CHECK AND FIX THIS!!!!!
     snp.df <- as.data.frame(g, one.col = TRUE, ids = TRUE)
     all.biallelic <- all(sapply(snp.df[, -1], function(x) nlevels(x) <= 3))
     if(!all.biallelic) warning("some loci in 'g' are not biallelic")

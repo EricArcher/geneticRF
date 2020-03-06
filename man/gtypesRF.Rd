@@ -4,8 +4,7 @@
 \alias{gtypesRF}
 \title{gtype Random Forest}
 \usage{
-gtypesRF(g, gene = 1, pairwise = FALSE, conf.level = 0.95,
-  threshold = 0.8, unk = NULL, ...)
+gtypesRF(g, gene = 1, pairwise = FALSE, conf.level = 0.95, unk = NULL, ...)
 }
 \arguments{
 \item{g}{haploid \code{\link[strataG]{gtypes}} object with aligned sequences.}
@@ -15,8 +14,6 @@ gtypesRF(g, gene = 1, pairwise = FALSE, conf.level = 0.95,
 \item{pairwise}{do analysis on all pairwise combinations of strata?}
 
 \item{conf.level}{confidence level for the \code{\link{binom.test}} confidence interval}
-
-\item{threshold}{threshold to test observed classification probability against.}
 
 \item{unk}{vector of strata to be treated as "unknowns" for prediction with}
 
@@ -30,6 +27,15 @@ a list containing a data.frame of summary statistics (\code{smry}), and the
 }
 \description{
 Conduct Random Forest on a gtypes object.
+}
+\examples{
+library(strataG)
+data(dloop.g)
+
+rf.result <- gtypesRF(dloop.g, pairwise = TRUE)
+
+rf.result
+
 }
 \author{
 Eric Archer \email{eric.archer@noaa.gov}

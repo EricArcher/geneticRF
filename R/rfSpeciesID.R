@@ -31,7 +31,7 @@ rfSpeciesID <- function(g, ref.strata = NULL, unk.strata = NULL, ...) {
   if(length(unk.strata) == 0) return(list(pred = NA, prob = NA, rf = ref.rf))
   unk.df <- seq.df[seq.df$stratum %in% unk.strata, ]
   unk.df$stratum <- droplevels(unk.df$stratum)
-  unk.pred <- predict(ref.rf$rf, unk.df, type = "response")
-  unk.prob <- predict(ref.rf$rf, unk.df, type = "prob")
+  unk.pred <- stats::predict(ref.rf$rf, unk.df, type = "response")
+  unk.prob <- stats::predict(ref.rf$rf, unk.df, type = "prob")
   list(pred = unk.pred, prob = unk.prob, rf = ref.rf)
 }
