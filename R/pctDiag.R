@@ -8,18 +8,20 @@
 #' 
 #' @export
 #' 
-pctDiag <- function(rf, pd.vec) {
+pctDiag <- function(rf, pd.vec = NULL) {
+  predicted <- apply(rf$votes, 1, function(x) colnames(rf$votes)[which.max(x)])
   vote.dfs <- sapply(colnames(rf$votes), function(y) {
     y.i <- which(rf$y == y)
     votes <- rf$votes[y.i, y]
-    df <- data.frame(votes = votes, is.correct = rf$predicted[y.i] == rf$y[y.i])
-    df[order(df$votes), ]
+    df <- data.frame(votes = votes, is.correct = predicted[y.i] == rf$y[y.i])
   }, simplify = F)
-  strata.pd <- sapply(vote.dfs, function(df) sum(df$is.correct) / nrow(df))
-  is.min <- which.min(strata.pd)
-  min.df <- vote.dfs[[is.min]]
-  result <- sapply(pd.vec, function(i) sum(min.df$votes > i) / nrow(min.df))
-  result <- c(strata.pd[is.min], result)
-  names(result) <- paste("pd", c("0.5", pd.vec), sep = ".")
+  min.p <-  1 / nlevels(rf$y)
+  pd.vec <- if(is.null(pd.vec)) min.p else c(min.p, pd.vec)
+  pd.vec <- pd.vec[pd.vec >= min.p]
+  result <- sapply(pd.vec, function(p) {
+    strata.pd <- sapply(vote.dfs, function(df) mean(df$is.correct & df$votes >= p))
+    unname(strata.pd[which.min(strata.pd)])
+  })
+  names(result) <- paste("pd",  pd.vec, sep = ".")
   result
 }

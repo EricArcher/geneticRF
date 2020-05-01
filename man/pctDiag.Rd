@@ -4,7 +4,7 @@
 \alias{pctDiag}
 \title{Extract Percent Diagnosable}
 \usage{
-pctDiag(rf, pd.vec)
+pctDiag(rf, pd.vec = NULL)
 }
 \arguments{
 \item{rf}{a \code{\link[randomForest]{randomForest}} object.}
