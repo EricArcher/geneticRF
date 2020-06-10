@@ -24,17 +24,24 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
     
     # extract variable sites for these sequences and create sequence matrix
     var.sites <- strataG::variableSites(dna.seqs)
-    var.seq.mat <- tolower(do.call(rbind, as.character(as.list(var.sites$sites))))
+    var.seq.mat <- tolower(
+      do.call(rbind, as.character(as.list(var.sites$sites)))
+    )
     sites <- paste("site", colnames(var.sites$site.freqs), sep = ".")
     
     # only use sites with valid bases
-    to.keep <- apply(var.seq.mat, 2, function(x) all(x %in% c("a", "c", "g", "t", "-", ".")))
+    to.keep <- apply(var.seq.mat, 2, function(x) {
+      all(x %in% c("a", "c", "g", "t", "-", "."))
+    })
     if(sum(to.keep) == 0) return(NULL)
     var.seq.mat <- cbind(var.seq.mat[, to.keep])
     colnames(var.seq.mat) <- sites[to.keep]
     
     # create factors of variable site columns
-    seq.df <- do.call(data.frame, lapply(colnames(var.seq.mat), function(x) factor(var.seq.mat[, x])))
+    seq.df <- do.call(
+      data.frame, 
+      lapply(colnames(var.seq.mat), function(x) factor(var.seq.mat[, x]))
+    )
     colnames(seq.df) <- colnames(var.seq.mat)
     
     # add strata and Ids
@@ -44,7 +51,9 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
     seq.df
   } else { # CHECK AND FIX THIS!!!!!
     snp.df <- as.data.frame(g, one.col = TRUE, ids = TRUE)
-    all.biallelic <- all(sapply(snp.df[, -1], function(x) nlevels(x) <= 3))
+    all.biallelic <- all(
+      sapply(snp.df[, -1], function(x) length(unique(x)) <= 3)
+    )
     if(!all.biallelic) warning("some loci in 'g' are not biallelic")
     snp.df
   }
