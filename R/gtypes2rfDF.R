@@ -47,14 +47,11 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
     # add strata and Ids
     seq.df <- data.frame(cbind(stratum = df$stratum, seq.df[df[, 3], ]))
     rownames(seq.df) <- df$id
-    
     seq.df
-  } else { # CHECK AND FIX THIS!!!!!
-    snp.df <- as.data.frame(g, one.col = TRUE, ids = TRUE)
-    all.biallelic <- all(
-      sapply(snp.df[, -1], function(x) length(unique(x)) <= 3)
-    )
-    if(!all.biallelic) warning("some loci in 'g' are not biallelic")
+  } else {
+    snp.df <- as.data.frame(g, ids = TRUE, coded.snps = TRUE)
+    rownames(snp.df) <- snp.df$id
+    snp.df$id <- NULL
     snp.df
   }
   
