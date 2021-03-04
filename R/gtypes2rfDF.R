@@ -20,7 +20,7 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
     # extract stratified sequences
     if(is.numeric(gene)) gene <- strataG::getLociNames(g)[gene]
     df <- stats::na.omit(strataG::as.data.frame(g))[, c("id", "stratum", gene)]
-    dna.seqs <- as.matrix(strataG::getSequences(g)[[gene]])[df[, gene], ]
+    dna.seqs <- as.matrix(strataG::getSequences(g, seqName = gene))
     
     # extract variable sites for these sequences and create sequence matrix
     var.sites <- strataG::variableSites(dna.seqs)
