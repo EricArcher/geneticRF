@@ -45,7 +45,7 @@ gtypes2rfDF <- function(g, gene = 1, label = NULL) {
     colnames(seq.df) <- colnames(var.seq.mat)
     
     # add strata and Ids
-    seq.df <- data.frame(cbind(stratum = df$stratum, seq.df[df[, 3], ]))
+    seq.df <- data.frame(cbind(stratum = df$stratum, seq.df[df$id, ]))
     rownames(seq.df) <- df$id
     seq.df
   } else {

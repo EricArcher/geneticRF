@@ -35,14 +35,11 @@ this value will be used instead.}
 \item{...}{arguments passed to \code{\link[randomForest]{randomForest}}.}
 }
 \value{
-a list containing a data.frame of summary statistics (\code{smry}), and the 
-  \code{randomForest} object (\code{rf}).
+a list containing a data.frame of summary statistics (\code{smry}), 
+  and the \code{rfPermute} object (\code{rp}).
 }
 \description{
 Conduct Random Forest on stratified data.frame of sequences.
-}
-\seealso{
-\code{\link[rfPermute]{classConfInt}}
 }
 \author{
 Eric Archer \email{eric.archer@noaa.gov}

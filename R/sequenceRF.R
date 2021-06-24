@@ -12,12 +12,10 @@
 #' @param conf.level confidence level for the \code{\link{binom.test}} confidence interval
 #' @param ... arguments passed to \code{\link[randomForest]{randomForest}}.
 #' 
-#' @return a list containing a data.frame of summary statistics (\code{smry}), and the 
-#'   \code{randomForest} object (\code{rf}).
+#' @return a list containing a data.frame of summary statistics (\code{smry}), 
+#'   and the \code{rfPermute} object (\code{rp}).
 #' 
 #' @author Eric Archer \email{eric.archer@@noaa.gov} 
-#' 
-#' @seealso \code{\link[rfPermute]{classConfInt}}
 #' 
 #' @export
 #' 
@@ -33,13 +31,14 @@ sequenceRF <- function(x, replace = FALSE, sampsize = NULL,
     sampsize <- rep(n, length(strata.freq))
   }
   sampsize <- ifelse(sampsize < min.n, min.n, sampsize)
-  rf <- rfPermute::rfPermute(
+  rp <- rfPermute::rfPermute(
     stratum ~ ., data = x, replace = replace, 
     sampsize = sampsize, nrep = nrep, ...
   )
   
+  rf <- rfPermute::as.randomForest(rp)
   overall.accuracy <- 1 - as.vector(rf$err.rate[nrow(rf$err.rate), "OOB"])
-  ci <- rfPermute::confusionMatrix(rf, conf.level = conf.level)
+  ci <- rfPermute::confusionMatrix(rp, conf.level = conf.level)
   ci <- ci[, (length(rf$classes) + 1):(length(rf$classes) + 3)]
   min.diag <- which.min(ci[-nrow(ci), 1])
   diag.strata <- rownames(ci)[min.diag]
@@ -66,5 +65,5 @@ sequenceRF <- function(x, replace = FALSE, sampsize = NULL,
   )
   rownames(smry) <- NULL
   
-  list(smry = smry, rf = rf)
+  list(smry = smry, rp = rp)
 }
