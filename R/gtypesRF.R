@@ -46,7 +46,7 @@ gtypesRF <- function(g, gene = 1, pairwise = FALSE, conf.level = 0.95,
       do.call(gtypesRF, c(list(g = pair.g, pairwise = FALSE), args))
     })
     list(smry = cbind(sp, do.call(rbind, lapply(result, function(x) x$smry))),
-         rf = lapply(result, function(x) x$rf)
+         rf = lapply(result, function(x) x$rp)
     )
   } else {
     seq.df <- gtypes2rfDF(g, gene = gene)
@@ -56,10 +56,10 @@ gtypesRF <- function(g, gene = 1, pairwise = FALSE, conf.level = 0.95,
     args <- c(list(x = rf.df), args)
     result <- do.call(sequenceRF, args)
     result$seq.df <- seq.df
-    result$unk <- if(!is.null(unk) & !is.null(result$rf)) {
+    result$unk <- if(!is.null(unk) & !is.null(result$rp)) {
       unk.df <- seq.df[seq.df$strata %in% unk, ]
-      pred <- data.frame(stats::predict(result$rf, unk.df, type = "prob"))
-      pred$predicted <- stats::predict(result$rf, unk.df, type = "response")
+      pred <- data.frame(stats::predict(result$rp, unk.df, type = "prob"))
+      pred$predicted <- stats::predict(result$rp, unk.df, type = "response")
       pred
     } else NULL
     result
