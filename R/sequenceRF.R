@@ -25,11 +25,7 @@ sequenceRF <- function(x, replace = FALSE, sampsize = NULL,
   if(is.null(x)) return(NULL)
   if(length(unique(x$stratum)) < 2) return(NULL)
   
-  if(is.null(sampsize)) {
-    strata.freq <- table(x$stratum)
-    n <- ceiling(min(strata.freq) * train.pct)
-    sampsize <- rep(n, length(strata.freq))
-  }
+  if(is.null(sampsize)) sampsize <- rfPermute::balancedSampsize(x$stratum)
   sampsize <- ifelse(sampsize < min.n, min.n, sampsize)
   rp <- rfPermute::rfPermute(
     stratum ~ ., data = x, replace = replace, 
